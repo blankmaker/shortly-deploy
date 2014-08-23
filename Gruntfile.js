@@ -6,10 +6,10 @@ module.exports = function(grunt) {
       clientApp: {
         src: ['public/client/*.js'],
         dest: 'public/dist/prodClient.js'
-      }, 
+      },
 
       libraries: {
-        src: ['public/lib/underscore.js','public/lib/jquery.js','public/lib/backbone.js', "public/lib/handlebars.js"], 
+        src: ['public/lib/underscore.js','public/lib/jquery.js','public/lib/backbone.js', "public/lib/handlebars.js"],
         dest: 'public/dist/prodLib.js'
       }
     },
@@ -19,12 +19,6 @@ module.exports = function(grunt) {
           reporter: 'spec'
         },
         src: ['test/**/*.js']
-      }
-    },
-
-    nodemon: {
-      dev: {
-        script: 'server.js'
       }
     },
 
@@ -52,8 +46,14 @@ module.exports = function(grunt) {
     cssmin: {
       combine: {
         files: {
-          'public/dist/prodCSS.min.css': ['public/style.css']  
+          'public/dist/prodCSS.min.css': ['public/style.css']
         }
+      }
+    },
+
+     nodemon: {
+      dev: {
+        script:'server.js'
       }
     },
 
@@ -65,7 +65,7 @@ module.exports = function(grunt) {
         ],
         tasks: [
           'concat',
-          'uglify'
+          'uglify',
         ]
       },
       css: {
@@ -75,9 +75,13 @@ module.exports = function(grunt) {
     },
 
     shell: {
-      prodServer: {
+      deploy: {
+        command: 'grunt build'
+      },
+      prod: {
+        command: 'git push azure master'
       }
-    },
+    }
   });
 
   grunt.loadNpmTasks('grunt-contrib-uglify');
@@ -106,7 +110,7 @@ module.exports = function(grunt) {
   // Main grunt tasks
   ////////////////////////////////////////////////////
   grunt.registerTask('default', [
-    'mochaTest', 'concat', 'uglify', 'jshint', 'cssmin'
+    'mochaTest', 'concat', 'jshint', 'nodemon'
   ]);
 
   grunt.registerTask('test', [
@@ -130,19 +134,21 @@ module.exports = function(grunt) {
   ]);
 
   grunt.registerTask('build', [
+    'concat',
+    'uglify',
+    'jshint',
+    'cssmin'
   ]);
 
-  grunt.registerTask('upload', function(n) {
+
+
+  grunt.registerTask('deploy', function(n) {
     if(grunt.option('prod')) {
-      // add your production server task here
+      grunt.task.run([ 'shell:prod' ]);
     } else {
-      grunt.task.run([ 'server-dev' ]);
+      grunt.task.run([ 'shell:deploy' ]);
     }
   });
-
-  grunt.registerTask('deploy', [
-    // add your deploy tasks here
-  ]);
 
 
 };

@@ -1,0 +1,11 @@
+Sat Aug 23 2014 11:38:52 GMT-0700 (PDT):
+[Error: Site undefined does not exist or has no hostnames]
+Error: Site undefined does not exist or has no hostnames
+    at __$__6 (/Users/student/.nvm/v0.10.26/lib/node_modules/azure-cli/lib/commands/asm/site._js:459:24)
+    at ___ (/Users/student/.nvm/v0.10.26/lib/node_modules/azure-cli/lib/commands/asm/site._js:459:107)
+    at ___ (/Users/student/.nvm/v0.10.26/lib/node_modules/azure-cli/node_modules/streamline/lib/callbacks/runtime.js:85:13)
+    at /Users/student/.nvm/v0.10.26/lib/node_modules/azure-cli/node_modules/streamline/lib/callbacks/runtime.js:77:14
+    at Object.__g.trampoline.flush (/Users/student/.nvm/v0.10.26/lib/node_modules/azure-cli/node_modules/kuduscript/node_modules/streamline/lib/callbacks/runtime.js:20:29)
+    at ___ (/Users/student/.nvm/v0.10.26/lib/node_modules/azure-cli/node_modules/streamline/lib/callbacks/runtime.js:93:61)
+    at /Users/student/.nvm/v0.10.26/lib/node_modules/azure-cli/lib/util/cacheUtils.js:159:7
+    at Object.oncomplete (fs.js:107:15)
