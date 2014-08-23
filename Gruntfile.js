@@ -3,6 +3,15 @@ module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     concat: {
+      clientApp: {
+        src: ['public/client/*.js'],
+        dest: 'public/dist/prodClient.js'
+      }, 
+
+      libraries: {
+        src: ['public/lib/underscore.js','public/lib/jquery.js','public/lib/backbone.js', "public/lib/handlebars.js"], 
+        dest: 'public/dist/prodLib.js'
+      }
     },
 
     mochaTest: {
@@ -21,6 +30,12 @@ module.exports = function(grunt) {
     },
 
     uglify: {
+      dist: {
+        files: {
+          'public/dist/prodClient.min.js': ['public/dist/prodClient.js'],
+          'public/dist/prodLib.min.js': ['public/dist/prodLib.js']
+        }
+      }
     },
 
     jshint: {
@@ -38,6 +53,11 @@ module.exports = function(grunt) {
     },
 
     cssmin: {
+      combine: {
+        files: {
+          'public/dist/prodCSS.min.css': ['public/style.css']  
+        }
+  }
     },
 
     watch: {
@@ -91,6 +111,19 @@ module.exports = function(grunt) {
 
   grunt.registerTask('test', [
     'mochaTest'
+  ]);
+
+  grunt.registerTask('smush', [
+    'concat:clientApp', 
+    'concat:libraries'
+  ]);
+
+  grunt.registerTask('unpretty', [
+    'uglify:dist'
+  ]);
+
+  grunt.registerTask('minifyCSS', [
+    'cssmin:combine'
   ]);
 
   grunt.registerTask('build', [
