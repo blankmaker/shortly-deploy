@@ -13,7 +13,6 @@ module.exports = function(grunt) {
         dest: 'public/dist/prodLib.js'
       }
     },
-
     mochaTest: {
       test: {
         options: {
@@ -39,9 +38,7 @@ module.exports = function(grunt) {
     },
 
     jshint: {
-      files: [
-        // Add filespec list here
-      ],
+      files: ['app/**/*.js', 'lib/**/*.js', 'public/**/*.js', 'test/**/*.js', 'Gruntfile.js', 'server-config.js', 'server.js' ],
       options: {
         force: 'true',
         jshintrc: '.jshintrc',
@@ -57,7 +54,7 @@ module.exports = function(grunt) {
         files: {
           'public/dist/prodCSS.min.css': ['public/style.css']  
         }
-  }
+      }
     },
 
     watch: {
@@ -108,22 +105,28 @@ module.exports = function(grunt) {
   ////////////////////////////////////////////////////
   // Main grunt tasks
   ////////////////////////////////////////////////////
+  grunt.registerTask('default', [
+    'mochaTest', 'concat', 'uglify', 'jshint', 'cssmin'
+  ]);
 
   grunt.registerTask('test', [
     'mochaTest'
   ]);
 
   grunt.registerTask('smush', [
-    'concat:clientApp', 
-    'concat:libraries'
+    'concat'
   ]);
 
   grunt.registerTask('unpretty', [
     'uglify:dist'
   ]);
 
+  grunt.registerTask('syntax', [
+    'jshint'
+  ]);
+
   grunt.registerTask('minifyCSS', [
-    'cssmin:combine'
+    'cssmin'
   ]);
 
   grunt.registerTask('build', [
